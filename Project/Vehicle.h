@@ -11,8 +11,8 @@
 //
 //------------------------------------------------------------------------
 #include "MovingEntity.h"
-#include "2d/Vector2D.h"
-#include "misc/Smoother.h"
+#include "../Common/2d/Vector2D.h"
+#include "../Common/misc/Smoother.h"
 
 #include <vector>
 #include <list>

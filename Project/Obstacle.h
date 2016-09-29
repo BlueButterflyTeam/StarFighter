@@ -9,9 +9,9 @@
 //  Author: Mat Buckland 2002 (fup@ai-junkie.com)
 //
 //------------------------------------------------------------------------
-#include "2d/Vector2D.h"
+#include "../Common/2d/Vector2D.h"
 #include "BaseGameEntity.h"
-#include "misc/Cgdi.h"
+#include "../Common/misc/Cgdi.h"
 
 
 #include <windows.h>

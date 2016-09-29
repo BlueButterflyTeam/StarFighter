@@ -1,7 +1,7 @@
 #include "Path.h"
-#include "misc/utils.h"
-#include "misc/Cgdi.h"
-#include "2d/transformations.h"
+#include "../Common/misc/utils.h"
+#include "../Common/misc/Cgdi.h"
+#include "../Common/2d/transformations.h"
 
 std::list<Vector2D> Path::CreateRandomPath(int   NumWaypoints,
                                            double MinX,

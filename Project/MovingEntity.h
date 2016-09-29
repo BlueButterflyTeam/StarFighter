@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------
 #include <cassert>
 
-#include "2D/Vector2D.h"
+#include "../Common/2D/Vector2D.h"
 #include "BaseGameEntity.h"
 
 
