@@ -25,8 +25,10 @@ class SteeringBehavior;
 
 class Vehicle : public MovingEntity
 {
+public:
+	enum colors { BLUE, RED, GREEN };
 
-private:
+protected:
 
   //a pointer to the world data. So a vehicle can access any obstacle,
   //path, wall or agent data
@@ -52,6 +54,9 @@ private:
   //steering behaviors make use of this - see Wander)
   double                m_dTimeElapsed;
 
+  // colors to help differentiate the agents
+  colors color;
+
 
   //buffer for the vehicle shape
   std::vector<Vector2D> m_vecVehicleVB;
@@ -65,6 +70,7 @@ private:
 
 
 public:
+	
 
   Vehicle(GameWorld* world,
          Vector2D position,
@@ -79,9 +85,9 @@ public:
   ~Vehicle();
 
   //updates the vehicle's position and orientation
-  void        Update(double time_elapsed);
+  void Update(double time_elapsed);
 
-  void        Render();
+  void Render();
 
                                                                           
   //-------------------------------------------accessor methods
@@ -97,6 +103,7 @@ public:
   void        ToggleSmoothing(){m_bSmoothingOn = !m_bSmoothingOn;}
   
   double       TimeElapsed()const{return m_dTimeElapsed;}
+  void setColor(colors c) { color = c; }
  
 };
 

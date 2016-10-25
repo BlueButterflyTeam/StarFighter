@@ -25,7 +25,7 @@ class Vehicle;
 class CController;
 class Wall2D;
 class BaseGameEntity;
-class BaseGameEntity;
+class BaseGameEntity;	
 
 
 

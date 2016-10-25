@@ -42,9 +42,9 @@ Vehicle::Vehicle(GameWorld* world,
   m_pSteering = new SteeringBehavior(this);    
 
   //set up the smoother
-  m_pHeadingSmoother = new Smoother<Vector2D>(Prm.NumSamplesForSmoothing, Vector2D(0.0, 0.0)); 
-  
- 
+  m_pHeadingSmoother = new Smoother<Vector2D>(Prm.NumSamplesForSmoothing, Vector2D(0.0, 0.0));
+
+  color = Vehicle::BLUE;
 }
 
 
@@ -121,27 +121,19 @@ void Vehicle::Render()
   //a vector to hold the transformed vertices
   static std::vector<Vector2D>  m_vecVehicleVBTrans;
 
-  //render neighboring vehicles in different colors if requested
-  if (m_pWorld->RenderNeighbors())
+  switch (color)
   {
-    if (ID() == 0) gdi->RedPen();
-    else if(IsTagged()) gdi->GreenPen();
-    else gdi->BluePen();
-  }
-
-  else
-  {
-    gdi->BluePen();
-  }
-
-  if (Steering()->isInterposeOn())
-  {
-    gdi->RedPen();
-  }
-
-  if (Steering()->isHideOn())
-  {
-    gdi->GreenPen();
+  case Vehicle::BLUE:
+	  gdi->BluePen();
+	  break;
+  case Vehicle::RED:
+	  gdi->RedPen();
+	  break;
+  case Vehicle::GREEN:
+	  gdi->GreenPen();
+	  break;
+  default:
+	  break;
   }
 
   if (isSmoothingOn())

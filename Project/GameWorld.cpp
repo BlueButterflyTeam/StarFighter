@@ -1,5 +1,7 @@
 #include "GameWorld.h"
 #include "Vehicle.h"
+#include "Agent.h"
+#include "Leader.h"
 #include "constants.h"
 #include "Obstacle.h"
 #include "../Common/2D/Geometry.h"
@@ -49,51 +51,50 @@ GameWorld::GameWorld(int cx, int cy):
   m_pPath = new Path(5, border, border, cx-border, cy-border, true); 
 
   //setup the agents
-  for (int a=0; a<Prm.NumAgents; ++a)
-  {
+  //for (int a=0; a<Prm.NumAgents; ++a)
+  //{
 
     //determine a random starting position
-    Vector2D SpawnPos = Vector2D(cx/2.0+RandomClamped()*cx/2.0,
-                                 cy/2.0+RandomClamped()*cy/2.0);
+    Vector2D SpawnPos = Vector2D(cx/2.0+RandomClamped()*cx/2.0, cy/2.0+RandomClamped()*cy/2.0);
 
 
-    Vehicle* pVehicle = new Vehicle(this,
-                                    SpawnPos,                 //initial position
-                                    RandFloat()*TwoPi,        //start rotation
-                                    Vector2D(0,0),            //velocity
-                                    Prm.VehicleMass,          //mass
-                                    Prm.MaxSteeringForce,     //max force
-                                    Prm.MaxSpeed,             //max velocity
-                                    Prm.MaxTurnRatePerSecond, //max turn rate
-                                    Prm.VehicleScale);        //scale
+    Leader* leader = new Leader(this, SpawnPos, RandFloat()*TwoPi, Vector2D(0,0), Prm.VehicleMass, Prm.MaxSteeringForce, 100, Prm.MaxTurnRatePerSecond, Prm.VehicleScale);
 
-    pVehicle->Steering()->FlockingOn();
+	leader->SetScale(Vector2D(10, 10));
+	leader->Steering()->WanderOn();
+	m_Vehicles.push_back(leader);
+	m_pCellSpace->AddEntity(leader);
+	leader->setColor(Vehicle::RED);
 
-    m_Vehicles.push_back(pVehicle);
+	//Creating the following agents
+	for (int i = 1; i < 20; i++)
+	{
+		// Random starting position
+		SpawnPos = Vector2D(cx / 2.0 + i, cy / 2.0);
 
-    //add it to the cell subdivision
-    m_pCellSpace->AddEntity(pVehicle);
-  }
+		Agent* follower = new Agent(this,
+			SpawnPos,                 //initial position
+			RandFloat()*TwoPi,        //start rotation
+			Vector2D(0, 0),            //velocity
+			Prm.VehicleMass,          //mass
+			Prm.MaxSteeringForce,     //max force
+			200,             //max velocity
+			Prm.MaxTurnRatePerSecond, //max turn rate
+			Prm.VehicleScale);        //scale
 
+		follower->setLeader(m_Vehicles.at(i - 1));
 
-#define SHOAL
-#ifdef SHOAL
-  m_Vehicles[Prm.NumAgents-1]->Steering()->FlockingOff();
-  m_Vehicles[Prm.NumAgents-1]->SetScale(Vector2D(10, 10));
-  m_Vehicles[Prm.NumAgents-1]->Steering()->WanderOn();
-  m_Vehicles[Prm.NumAgents-1]->SetMaxSpeed(70);
+		m_Vehicles.push_back(follower);
+		m_pCellSpace->AddEntity(follower);
+	}
 
+	// Walls
+	CreateWalls();
 
-   for (int i=0; i<Prm.NumAgents-1; ++i)
-  {
-    m_Vehicles[i]->Steering()->EvadeOn(m_Vehicles[Prm.NumAgents-1]);
-
-  }
-#endif
- 
-  //create any obstacles or walls
-  //CreateObstacles();
-  //CreateWalls();
+	for (unsigned int i = 0; i<m_Vehicles.size(); ++i)
+	{
+		m_Vehicles[i]->Steering()->WallAvoidanceOn();
+	}
 }
 
 
