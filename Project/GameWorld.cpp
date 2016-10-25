@@ -50,24 +50,30 @@ GameWorld::GameWorld(int cx, int cy):
   double border = 30;
   m_pPath = new Path(5, border, border, cx-border, cy-border, true); 
 
-  //setup the agents
-  //for (int a=0; a<Prm.NumAgents; ++a)
-  //{
-
     //determine a random starting position
     Vector2D SpawnPos = Vector2D(cx/2.0+RandomClamped()*cx/2.0, cy/2.0+RandomClamped()*cy/2.0);
+
+
+	Leader* player = new Leader(this, SpawnPos, RandFloat()*TwoPi, Vector2D(0, 0), Prm.VehicleMass, Prm.MaxSteeringForce, 100, Prm.MaxTurnRatePerSecond, Prm.VehicleScale);
+
+	player->SetScale(Vector2D(10, 10));
+	m_Vehicles.push_back(player);
+	m_pCellSpace->AddEntity(player);
+	player->setColor(Vehicle::GREEN);
+	player->Steering()->WanderOff();
 
 
     Leader* leader = new Leader(this, SpawnPos, RandFloat()*TwoPi, Vector2D(0,0), Prm.VehicleMass, Prm.MaxSteeringForce, 100, Prm.MaxTurnRatePerSecond, Prm.VehicleScale);
 
 	leader->SetScale(Vector2D(10, 10));
-	leader->Steering()->WanderOn();
 	m_Vehicles.push_back(leader);
 	m_pCellSpace->AddEntity(leader);
 	leader->setColor(Vehicle::RED);
 
+	
+
 	//Creating the following agents
-	for (int i = 1; i < 20; i++)
+	for (int i = 2; i < 4; i++)
 	{
 		// Random starting position
 		SpawnPos = Vector2D(cx / 2.0 + i, cy / 2.0);
@@ -309,6 +315,10 @@ void GameWorld::HandleKeyPresses(WPARAM wParam)
           }
         }
         break;
+
+	case 'W':
+		m_Vehicles[0]->Steering()->WanderOff();
+		break;
 
   }//end switch
 }
