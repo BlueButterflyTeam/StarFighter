@@ -114,6 +114,7 @@ public:
   //handle WM_COMMAND messages
   void        HandleKeyPresses(WPARAM wParam);
   void        HandleMenuItems(WPARAM wParam, HWND hwnd);
+  void	HandleKeyDown(WPARAM wParam);
   
   void        TogglePause(){m_bPaused = !m_bPaused;}
   bool        Paused()const{return m_bPaused;}

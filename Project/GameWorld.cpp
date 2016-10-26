@@ -317,8 +317,24 @@ void GameWorld::HandleKeyPresses(WPARAM wParam)
         break;
 
 	case 'W':
-		m_Vehicles[0]->Steering()->WanderOff();
+		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y - 100));
 		break;
+
+	case 'A':
+		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x - 100, m_Vehicles[0]->Pos().y));
+		break;
+		
+	case 'S':
+		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y + 100));
+		break;
+
+	case 'D':
+		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x + 100, m_Vehicles[0]->Pos().y));
+		break;
+	
+	
+
+
 
   }//end switch
 }

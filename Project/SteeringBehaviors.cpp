@@ -85,8 +85,7 @@ SteeringBehavior::~SteeringBehavior(){delete m_pPath;}
 Vector2D SteeringBehavior::Calculate()
 { 
   //reset the steering force
-  m_vSteeringForce.Zero();
-
+	m_vSteeringForce.Zero();
   //use space partitioning to calculate the neighbours of this vehicle
   //if switched on. If not, use the standard tagging system
   if (!isSpacePartitioningOn())
@@ -287,7 +286,7 @@ Vector2D SteeringBehavior::CalculatePrioritized()
 
   if (On(seek))
   {
-    force = Seek(m_pVehicle->World()->Crosshair()) * m_dWeightSeek;
+    force = Seek(mPos) * m_dWeightSeek;
 
     if (!AccumulateForce(m_vSteeringForce, force)) return m_vSteeringForce;
   }
@@ -693,10 +692,33 @@ Vector2D SteeringBehavior::CalculateDithered()
 //------------------------------------------------------------------------
 Vector2D SteeringBehavior::Seek(Vector2D TargetPos)
 {
-  Vector2D DesiredVelocity = Vec2DNormalize(TargetPos - m_pVehicle->Pos())
-                            * m_pVehicle->MaxSpeed();
+	Vector2D ToTarget = TargetPos - m_pVehicle->Pos();
 
-  return (DesiredVelocity - m_pVehicle->Velocity());
+	//calculate the distance to the target
+	double dist = ToTarget.Length();
+
+	if (dist > 0)
+	{
+		//because Deceleration is enumerated as an int, this value is required
+		//to provide fine tweaking of the deceleration..
+		const double DecelerationTweaker = 0.3;
+
+		//calculate the speed required to reach the target given the desired
+		//deceleration
+		double speed = dist / (5.0 * DecelerationTweaker);
+
+		//make sure the velocity does not exceed the max
+		speed = min(speed, m_pVehicle->MaxSpeed());
+
+		//from here proceed just like Seek except we don't need to normalize 
+		//the ToTarget vector because we have already gone to the trouble
+		//of calculating its length: dist. 
+		Vector2D DesiredVelocity = ToTarget * speed / dist;
+
+		return (DesiredVelocity - m_pVehicle->Velocity());
+	}
+
+	return Vector2D(0, 0);
 }
 
 //----------------------------- Flee -------------------------------------

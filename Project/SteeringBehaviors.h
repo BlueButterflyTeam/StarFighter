@@ -147,7 +147,7 @@ private:
   //any offset used for formations or offset pursuit
   Vector2D     m_vOffset;
 
-
+  Vector2D	mPos;
 
   //binary flags to indicate whether or not a behavior should be active
   int           m_iFlags;
@@ -311,7 +311,7 @@ public:
 
 
   void FleeOn(){m_iFlags |= flee;}
-  void SeekOn(){m_iFlags |= seek;}
+  void SeekOn(Vector2D pos) { m_iFlags |= seek; mPos = pos; }
   void ArriveOn(){m_iFlags |= arrive;}
   void WanderOn(){m_iFlags |= wander;}
   void PursuitOn(Vehicle* v){m_iFlags |= pursuit; m_pTargetAgent1 = v;}
@@ -370,6 +370,20 @@ public:
   double SeparationWeight()const{return m_dWeightSeparation;}
   double AlignmentWeight()const{return m_dWeightAlignment;}
   double CohesionWeight()const{return m_dWeightCohesion;}
+
+  void setForce(Vector2D force) 
+  {
+	  m_vSteeringForce = force;
+  }
+
+  Vector2D getForce()
+  {
+	  return m_vSteeringForce;
+  }
+
+  void setFlag(int flag) {
+	  m_iFlags = flag;
+  }
 
 };
 
