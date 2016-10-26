@@ -317,19 +317,59 @@ void GameWorld::HandleKeyPresses(WPARAM wParam)
         break;
 
 	case 'W':
-		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y - 100));
+		if (m_Vehicles[0]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y - 100));
+		}
 		break;
 
 	case 'A':
-		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x - 100, m_Vehicles[0]->Pos().y));
+		if (m_Vehicles[0]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x - 100, m_Vehicles[0]->Pos().y));
+		}
 		break;
 		
 	case 'S':
-		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y + 100));
+		if (m_Vehicles[0]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x, m_Vehicles[0]->Pos().y + 100));
+		}
 		break;
 
 	case 'D':
-		m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x + 100, m_Vehicles[0]->Pos().y));
+		if (m_Vehicles[0]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[0]->Steering()->SeekOn(Vector2D(m_Vehicles[0]->Pos().x + 100, m_Vehicles[0]->Pos().y));
+		}
+		break;
+
+	case VK_UP:
+		if (m_Vehicles[1]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[1]->Steering()->SeekOn(Vector2D(m_Vehicles[1]->Pos().x, m_Vehicles[1]->Pos().y - 100));
+		}
+		break;
+
+	case VK_DOWN:
+		if (m_Vehicles[1]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[1]->Steering()->SeekOn(Vector2D(m_Vehicles[1]->Pos().x, m_Vehicles[1]->Pos().y + 100));
+		}
+		break;
+
+	case VK_LEFT:
+		if (m_Vehicles[1]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[1]->Steering()->SeekOn(Vector2D(m_Vehicles[1]->Pos().x - 100, m_Vehicles[1]->Pos().y));
+		}
+		break;
+
+	case VK_RIGHT:
+		if (m_Vehicles[1]->getColor() == Vehicle::GREEN)
+		{
+			m_Vehicles[1]->Steering()->SeekOn(Vector2D(m_Vehicles[1]->Pos().x + 100, m_Vehicles[1]->Pos().y));
+		}
 		break;
 	
 	
@@ -409,6 +449,43 @@ void GameWorld::HandleMenuItems(WPARAM wParam, HWND hwnd)
 
       break;
 
+	case ID_PLAYERONE_BOT:
+
+		m_Vehicles[0]->setColor(Vehicle::RED);
+		m_Vehicles[0]->Steering()->SeekOff();
+		m_Vehicles[0]->Steering()->WanderOn();
+		ChangeMenuState(hwnd, ID_PLAYERONE_BOT, MFS_CHECKED);
+		ChangeMenuState(hwnd, ID_PLAYERONE_PLAYER, MFS_UNCHECKED);
+
+		break;
+
+	case ID_PLAYERONE_PLAYER:
+
+		m_Vehicles[0]->setColor(Vehicle::GREEN);
+		m_Vehicles[0]->Steering()->WanderOff();
+		ChangeMenuState(hwnd, ID_PLAYERONE_BOT, MFS_UNCHECKED);
+		ChangeMenuState(hwnd, ID_PLAYERONE_PLAYER, MFS_CHECKED);
+
+		break;
+
+	case ID_PLAYERTWO_BOT:
+
+		m_Vehicles[1]->setColor(Vehicle::RED);
+		m_Vehicles[1]->Steering()->SeekOff();
+		m_Vehicles[1]->Steering()->WanderOn();
+		ChangeMenuState(hwnd, ID_PLAYERTWO_BOT, MFS_CHECKED);
+		ChangeMenuState(hwnd, ID_PLAYERTWO_PLAYER, MFS_UNCHECKED);
+
+		break;
+
+	case ID_PLAYERTWO_PLAYER:
+
+		m_Vehicles[1]->setColor(Vehicle::GREEN);
+		m_Vehicles[1]->Steering()->WanderOff();
+		ChangeMenuState(hwnd, ID_PLAYERTWO_BOT, MFS_UNCHECKED);
+		ChangeMenuState(hwnd, ID_PLAYERTWO_PLAYER, MFS_CHECKED);
+
+		break;
 
     case IDR_PARTITIONING:
       {
@@ -515,13 +592,13 @@ void GameWorld::HandleMenuItems(WPARAM wParam, HWND hwnd)
       break;
 
       case ID_VIEW_FPS:
-      {
-        ToggleShowFPS();
+	  {
+		  ToggleShowFPS();
 
-        CheckMenuItemAppropriately(hwnd, ID_VIEW_FPS, RenderFPS());
-      }
+		  CheckMenuItemAppropriately(hwnd, ID_VIEW_FPS, RenderFPS());
+	  }
 
-      break;
+	  break;
 
       case ID_MENU_SMOOTHING:
       {

@@ -1,4 +1,4 @@
-//Microsoft Developer Studio generated resource script.
+// Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
 
@@ -13,20 +13,18 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.K.) resources
+// Anglais (Royaume-Uni) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 #pragma code_page(1252)
-#endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
 //
 
-IDR_MENU1 MENU DISCARDABLE 
+IDR_MENU1 MENU
 BEGIN
     POPUP "Objects"
     BEGIN
@@ -53,6 +51,19 @@ BEGIN
     BEGIN
         MENUITEM "On/Off",                      ID_MENU_SMOOTHING
     END
+    POPUP "Players"
+    BEGIN
+        POPUP "Player one"
+        BEGIN
+            MENUITEM "Bot",                         ID_PLAYERONE_BOT
+            MENUITEM "Player",                      ID_PLAYERONE_PLAYER
+        END
+        POPUP "Player two"
+        BEGIN
+            MENUITEM "Bot",                         ID_PLAYERTWO_BOT
+            MENUITEM "Player",                      ID_PLAYERTWO_PLAYER
+        END
+    END
 END
 
 
@@ -62,18 +73,18 @@ END
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE 
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE 
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE 
 BEGIN
     "\r\n"
     "\0"
@@ -81,7 +92,7 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // English (U.K.) resources
+#endif    // Anglais (Royaume-Uni) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
