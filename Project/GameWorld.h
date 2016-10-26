@@ -119,7 +119,8 @@ public:
   void        TogglePause(){m_bPaused = !m_bPaused;}
   bool        Paused()const{return m_bPaused;}
 
-  Agent* AddFollower(int cx, int cy);
+  Agent* AddFollower();
+  void DeleteFollower();
 
   Vector2D    Crosshair()const{return m_vCrosshair;}
   void        SetCrosshair(POINTS p);

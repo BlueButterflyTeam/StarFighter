@@ -73,9 +73,9 @@ GameWorld::GameWorld(int cx, int cy):
 	
 
 	//Creating the following agents
-	for (int i = 2; i < 4; i++)
+	for (int i = 2; i < 20; i++)
 	{
-		AddFollower(cx, cy)->setLeader(m_Vehicles.at(i - 1));
+		AddFollower()->setLeader(m_Vehicles.at(i - 1));
 	}
 
 	// Walls
@@ -107,10 +107,10 @@ GameWorld::~GameWorld()
   delete m_pPath;
 }
 
-Agent* GameWorld::AddFollower(int cx, int cy)
+Agent* GameWorld::AddFollower()
 {
 	// Random starting position
-	Vector2D SpawnPos = Vector2D(cx / 2.0, cy / 2.0);
+	Vector2D SpawnPos = Vector2D(m_cxClient / 2.0, m_cyClient / 2.0);
 
 	Agent* follower = new Agent(this,
 		SpawnPos,                 //initial position
@@ -128,6 +128,10 @@ Agent* GameWorld::AddFollower(int cx, int cy)
 	return follower;
 }
 
+void GameWorld::DeleteFollower()
+{
+	m_Vehicles.pop_back();
+}
 
 //----------------------------- Update -----------------------------------
 //------------------------------------------------------------------------
@@ -489,11 +493,11 @@ void GameWorld::HandleMenuItems(WPARAM wParam, HWND hwnd)
 		break;
 
 	case ID_FOLLOWERS_ADDFOLLOWER:
-
+		AddFollower();
 		break;
 
 	case ID_FOLLOWERS_DELETEFOLLOWER:
-
+		DeleteFollower();
 		break;
 
     case IDR_PARTITIONING:
