@@ -104,6 +104,7 @@ public:
   
   double       TimeElapsed()const{return m_dTimeElapsed;}
   void setColor(colors c) { color = c; }
+  int getColor() { return color; }
  
 };
 
