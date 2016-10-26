@@ -64,6 +64,11 @@ BEGIN
             MENUITEM "Player",                      ID_PLAYERTWO_PLAYER
         END
     END
+    POPUP "Followers"
+    BEGIN
+        MENUITEM "Add follower",                ID_FOLLOWERS_ADDFOLLOWER
+        MENUITEM "Delete follower",             ID_FOLLOWERS_DELETEFOLLOWER
+    END
 END
 
 
