@@ -137,7 +137,9 @@
     <ClCompile Include="..\Common\misc\iniFileLoaderBase.cpp" />
     <ClCompile Include="..\Common\misc\WindowUtils.cpp" />
     <ClCompile Include="..\Common\Time\PrecisionTimer.cpp" />
+    <ClCompile Include="Agent.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Leader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParamLoader.cpp" />
@@ -160,10 +162,12 @@
     <ClInclude Include="..\Common\misc\utils.h" />
     <ClInclude Include="..\Common\misc\WindowUtils.h" />
     <ClInclude Include="..\Common\Time\PrecisionTimer.h" />
+    <ClInclude Include="Agent.h" />
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="EntityFunctionTemplates.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Leader.h" />
     <ClInclude Include="MovingEntity.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="ParamLoader.h" />
