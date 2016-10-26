@@ -5,6 +5,8 @@
 *
 * Created by : Paul
 */
+#ifndef AGENT
+#define AGENT
 
 #include "Vehicle.h"
 
@@ -34,3 +36,5 @@ public:
 private:
 
 };
+
+#endif // !AGENT

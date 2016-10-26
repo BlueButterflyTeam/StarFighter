@@ -24,13 +24,15 @@
 #define ID_PLAYERONE_PLAYER             40019
 #define ID_PLAYERTWO_BOT                40020
 #define ID_PLAYERTWO_PLAYER             40021
+#define ID_FOLLOWERS_ADDFOLLOWER        40022
+#define ID_FOLLOWERS_DELETEFOLLOWER     40023
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        102
-#define _APS_NEXT_COMMAND_VALUE         40022
+#define _APS_NEXT_COMMAND_VALUE         40024
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

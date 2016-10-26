@@ -21,6 +21,7 @@
 #include "BaseGameEntity.h"
 #include "EntityFunctionTemplates.h"
 #include "vehicle.h"
+#include "Agent.h"
 
 
 class Obstacle;
@@ -114,10 +115,12 @@ public:
   //handle WM_COMMAND messages
   void        HandleKeyPresses(WPARAM wParam);
   void        HandleMenuItems(WPARAM wParam, HWND hwnd);
-  void	HandleKeyDown(WPARAM wParam);
   
   void        TogglePause(){m_bPaused = !m_bPaused;}
   bool        Paused()const{return m_bPaused;}
+
+  Agent* AddFollower();
+  void DeleteFollower();
 
   Vector2D    Crosshair()const{return m_vCrosshair;}
   void        SetCrosshair(POINTS p);

@@ -73,25 +73,9 @@ GameWorld::GameWorld(int cx, int cy):
 	
 
 	//Creating the following agents
-	for (int i = 2; i < 4; i++)
+	for (int i = 2; i < 20; i++)
 	{
-		// Random starting position
-		SpawnPos = Vector2D(cx / 2.0 + i, cy / 2.0);
-
-		Agent* follower = new Agent(this,
-			SpawnPos,                 //initial position
-			RandFloat()*TwoPi,        //start rotation
-			Vector2D(0, 0),            //velocity
-			Prm.VehicleMass,          //mass
-			Prm.MaxSteeringForce,     //max force
-			200,             //max velocity
-			Prm.MaxTurnRatePerSecond, //max turn rate
-			Prm.VehicleScale);        //scale
-
-		follower->setLeader(m_Vehicles.at(i - 1));
-
-		m_Vehicles.push_back(follower);
-		m_pCellSpace->AddEntity(follower);
+		AddFollower()->setLeader(m_Vehicles.at(i - 1));
 	}
 
 	// Walls
@@ -123,6 +107,31 @@ GameWorld::~GameWorld()
   delete m_pPath;
 }
 
+Agent* GameWorld::AddFollower()
+{
+	// Random starting position
+	Vector2D SpawnPos = Vector2D(m_cxClient / 2.0, m_cyClient / 2.0);
+
+	Agent* follower = new Agent(this,
+		SpawnPos,                 //initial position
+		RandFloat()*TwoPi,        //start rotation
+		Vector2D(0, 0),            //velocity
+		Prm.VehicleMass,          //mass
+		Prm.MaxSteeringForce,     //max force
+		200,             //max velocity
+		Prm.MaxTurnRatePerSecond, //max turn rate
+		Prm.VehicleScale);        //scale
+
+	m_Vehicles.push_back(follower);
+	m_pCellSpace->AddEntity(follower);
+
+	return follower;
+}
+
+void GameWorld::DeleteFollower()
+{
+	m_Vehicles.pop_back();
+}
 
 //----------------------------- Update -----------------------------------
 //------------------------------------------------------------------------
@@ -371,10 +380,6 @@ void GameWorld::HandleKeyPresses(WPARAM wParam)
 			m_Vehicles[1]->Steering()->SeekOn(Vector2D(m_Vehicles[1]->Pos().x + 100, m_Vehicles[1]->Pos().y));
 		}
 		break;
-	
-	
-
-
 
   }//end switch
 }
@@ -485,6 +490,14 @@ void GameWorld::HandleMenuItems(WPARAM wParam, HWND hwnd)
 		ChangeMenuState(hwnd, ID_PLAYERTWO_BOT, MFS_UNCHECKED);
 		ChangeMenuState(hwnd, ID_PLAYERTWO_PLAYER, MFS_CHECKED);
 
+		break;
+
+	case ID_FOLLOWERS_ADDFOLLOWER:
+		AddFollower();
+		break;
+
+	case ID_FOLLOWERS_DELETEFOLLOWER:
+		DeleteFollower();
 		break;
 
     case IDR_PARTITIONING:
